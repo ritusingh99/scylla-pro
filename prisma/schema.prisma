@@ -7,27 +7,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Device {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  name         String?
-  timestamp    DateTime?
-  deviceProfile String?
+model deviceProfile {
+  id                 String          @id @default(auto()) @map("_id") @db.ObjectId
+  deviceProfileName  String         
+  port               Int             @unique
+  devices            device[]
 }
 
+model device {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  deviceProfileId String         @db.ObjectId
+  deviceProfile   deviceProfile  @relation(fields: [deviceProfileId], references: [id])
+}
 
-model Post {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+model post {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String   @map("_user_id") @db.ObjectId
   user      User     @relation(fields: [userId], references: [id])
 }
 
-
 model User {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-  name  String
-  email String  @unique
-  posts post[]
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @unique
+  posts     post[]
 }
-
-
-

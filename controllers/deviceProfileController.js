@@ -1,4 +1,4 @@
-const createTCPServer = require("../lib/tcpServer");
+const { createTCPServer } = require("../lib/tcpServer");
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();

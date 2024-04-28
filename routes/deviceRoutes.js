@@ -11,6 +11,8 @@ router.get("/", deviceController.getAllDevices);
 router.delete("/:id", deviceController.deleteDevice);
 router.put("/:id", deviceController.updateDevice);
 
+// device profile connections
+
 router.post("/profile", deviceProfileController.addDeviceProfile);
 
 module.exports = router;

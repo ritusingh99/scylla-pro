@@ -15,10 +15,19 @@ model deviceProfile {
 }
 
 model device {
-  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
   name            String
-  deviceProfileId String         @db.ObjectId
-  deviceProfile   deviceProfile  @relation(fields: [deviceProfileId], references: [id])
+  deviceProfileId String        @db.ObjectId
+  deviceProfile   deviceProfile @relation(fields: [deviceProfileId], references: [id])
+  deviceData      deviceData[]
+}
+
+model deviceData {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  deviceId  String   @db.ObjectId
+  device    device   @relation(fields: [deviceId], references: [id])
+  data      Json
+  timestamp DateTime @default(now())
 }
 
 model post {

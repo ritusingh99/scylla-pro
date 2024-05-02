@@ -34,4 +34,14 @@ make common funciton to save data of a particlaur device in our data base
 6 - check the session.client id with client .terminal id to check for which device we need to save the data for , which client id created by us equal to the
 the device id used by the user
 
+create a device
+
+create a device profile
+
+create a conenction profile
+
+create services attached to device profiles
+
+create a json of variables attached to a connnection profile and device profile , along with there types
+
 POSt that we will create for http

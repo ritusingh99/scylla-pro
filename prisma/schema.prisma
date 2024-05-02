@@ -8,17 +8,34 @@ datasource db {
 }
 
 model deviceProfile {
-  id                 String          @id @default(auto()) @map("_id") @db.ObjectId
-  deviceProfileName  String         
-  port               Int             @unique
-  devices            device[]
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  port              Int      @unique
+  name              String
+  manufacturer      String?
+  model             String?
+  deviceType        String?
+  macAddress        String?
+  serialNumber      String?
+  userId            String?
+  description       String?
+  devices           device[]
 }
-
 model device {
-  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+   id              String        @id @default(auto()) @map("_id") @db.ObjectId
   name            String
-  deviceProfileId String        @db.ObjectId
+  deviceType      String
+  manufacturer    String?
+  model           String?
+  serialNumber    String?
+  macAddress      String?
+  firmwareVersion String?
+  ipAddress       String?
+  status          DeviceStatus  @default(OFFLINE)
+  lastSeenAt      DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
   deviceProfile   deviceProfile @relation(fields: [deviceProfileId], references: [id])
+  deviceProfileId String        @db.ObjectId
   deviceData      deviceData[]
 }
 
@@ -30,15 +47,15 @@ model deviceData {
   timestamp DateTime @default(now())
 }
 
-model post {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String   @map("_user_id") @db.ObjectId
-  user      User     @relation(fields: [userId], references: [id])
-}
-
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   email     String   @unique
-  posts     post[]
+}
+
+enum DeviceStatus {
+  ONLINE
+  OFFLINE
+  DISCONNECTED
+  ERROR
 }

@@ -34,14 +34,26 @@ make common funciton to save data of a particlaur device in our data base
 6 - check the session.client id with client .terminal id to check for which device we need to save the data for , which client id created by us equal to the
 the device id used by the user
 
-create a device
+3 may 2024
 
-create a device profile
+create a device: DOne
 
-create a conenction profile
+create a device profile : DOne
+
+create a conenction profile : DOne
 
 create services attached to device profiles
 
-create a json of variables attached to a connnection profile and device profile , along with there types
+create a json of variables attached to a connnection profile and device profile , along with there types : TBD
+
+TODO poc
+
+The thing that happens right now is the data comes to tc server and is passed through the device profile , psot the it can be stored directly or furthur modifications can be done for each device ---> how toa cheive furthur modifications --> the data should again be sebnt for modifications at device level , need to a lamba accumulator types the so where we can write teh custom cude fort hose modifiactions and save it there .
+
+Need to do POC on teh changes accumulator\\
+
+Need to do right now
+
+till then we will be savinf teh data directly in teh device data along with the devcie if that exists in teh device table in teh seiion id key which teh =user utself cerates .
 
 POSt that we will create for http

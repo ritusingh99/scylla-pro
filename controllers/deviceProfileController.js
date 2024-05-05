@@ -30,16 +30,15 @@ exports.addDeviceProfile = async (req, res) => {
 
   try {
     // Check if the port is already in use
-    const existingProfile = await prisma.deviceProfile.findUnique({
+    const existingProfile = await prisma.DeviceProfile.findUnique({
       where: { port: parsedPort },
     });
 
     if (existingProfile) {
       return res.status(400).json({ message: "Port is already in use" });
     }
-
     // Create a new deviceProfile
-    const newDeviceProfile = await prisma.deviceProfile.create({
+    const newDeviceProfile = await prisma.DeviceProfile.create({
       data: {
         name,
         port: parsedPort,

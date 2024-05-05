@@ -44,7 +44,7 @@ exports.createDevice = async (req, res) => {
     }
 
     // Unique Constraint Validation
-    const existingDevice = await prisma.device.findFirst({
+    const existingDevice = await prisma.Device.findFirst({
       where: {
         OR: [{ serialNumber: serialNumber }, { macAddress: macAddress }],
       },
@@ -58,7 +58,7 @@ exports.createDevice = async (req, res) => {
     }
 
     // Associated Data Validation
-    const deviceProfile = await prisma.deviceProfile.findUnique({
+    const deviceProfile = await prisma.DeviceProfile.findUnique({
       where: { id: deviceProfileId },
     });
 
@@ -74,7 +74,7 @@ exports.createDevice = async (req, res) => {
     const sanitizedModel = model ? validator.escape(model) : null;
 
     // Create a new device in the database
-    const device = await prisma.device.create({
+    const device = await prisma.Device.create({
       data: {
         name: sanitizedName,
         deviceType,
@@ -140,7 +140,7 @@ exports.updateDevice = async (req, res) => {
     }
 
     // Unique Constraint Validation
-    const existingDevice = await prisma.device.findFirst({
+    const existingDevice = await prisma.Device.findFirst({
       where: {
         AND: [
           { id: { not: id } },
@@ -159,7 +159,7 @@ exports.updateDevice = async (req, res) => {
     }
 
     // Associated Data Validation
-    const deviceProfile = await prisma.deviceProfile.findUnique({
+    const deviceProfile = await prisma.DeviceProfile.findUnique({
       where: { id: deviceProfileId },
     });
 
@@ -175,7 +175,7 @@ exports.updateDevice = async (req, res) => {
     const sanitizedModel = model ? validator.escape(model) : null;
 
     // Update the device in the database
-    const updatedDevice = await prisma.device.update({
+    const updatedDevice = await prisma.Device.update({
       where: { id },
       data: {
         name: sanitizedName,
@@ -200,7 +200,7 @@ exports.updateDevice = async (req, res) => {
 };
 exports.getAllDevices = async (req, res) => {
   try {
-    const devices = await prisma.device.findMany();
+    const devices = await prisma.Device.findMany();
     res.json(devices);
     console.log("done");
   } catch (error) {
@@ -212,7 +212,7 @@ exports.getAllDevices = async (req, res) => {
 exports.deleteDevice = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedDevice = await prisma.device.delete({
+    const deletedDevice = await prisma.Device.delete({
       where: { id },
     });
     res.json({ message: "Device deleted successfully" });

@@ -7,50 +7,63 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model deviceProfile {
-  id                String   @id @default(auto()) @map("_id") @db.ObjectId
-  port              Int      @unique
-  name              String
-  manufacturer      String?
-  model             String?
-  deviceType        String?
-  macAddress        String?
-  serialNumber      String?
-  userId            String?
-  description       String?
-  devices           device[]
+model DeviceCode {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  code         Json
+  compiledCode Json?
+  deviceIDs    String[]    @db.ObjectId
+  devices      Device[]    @relation(fields: [deviceIDs], references: [id])
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 }
-model device {
-   id              String        @id @default(auto()) @map("_id") @db.ObjectId
+
+model DeviceProfile {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  port         Int      @unique
+  name         String
+  manufacturer String?
+  model        String?
+  deviceType   String?
+  macAddress   String?
+  serialNumber String?
+  userId       String?
+  description  String?
+  devices      Device[]
+}
+
+model Device {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
   name            String
-  deviceType      String
+  deviceType      String?
   manufacturer    String?
   model           String?
   serialNumber    String?
   macAddress      String?
   firmwareVersion String?
   ipAddress       String?
-  status          DeviceStatus  @default(OFFLINE)
+  status          DeviceStatus   @default(OFFLINE)
   lastSeenAt      DateTime?
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-  deviceProfile   deviceProfile @relation(fields: [deviceProfileId], references: [id])
-  deviceProfileId String        @db.ObjectId
-  deviceData      deviceData[]
+  createdAt       DateTime?      @default(now())
+  updatedAt       DateTime?      @updatedAt
+  deviceProfile   DeviceProfile  @relation(fields: [deviceProfileId], references: [id])
+  deviceProfileId String         @db.ObjectId
+  deviceData      DeviceData[]
+  deviceCodeIDs   String[]       @db.ObjectId
+  deviceCodes     DeviceCode[]   @relation(fields: [deviceCodeIDs], references: [id])
 }
 
-model deviceData {
+model DeviceData {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   deviceId  String   @db.ObjectId
-  device    device   @relation(fields: [deviceId], references: [id])
+  device    Device   @relation(fields: [deviceId], references: [id])
   data      Json
   timestamp DateTime @default(now())
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  email     String   @unique
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  email String @unique
 }
 
 enum DeviceStatus {

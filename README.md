@@ -56,4 +56,8 @@ Need to do right now
 
 till then we will be savinf teh data directly in teh device data along with the devcie if that exists in teh device table in teh seiion id key which teh =user utself cerates .
 
-POSt that we will create for http
+06-05-24
+
+done poc on node vm need to use it ,, need to check about teh imprtos and exports how to do that
+
+save the code in various file need to check that also if we need comiple and save and then use that or run it as it is .
